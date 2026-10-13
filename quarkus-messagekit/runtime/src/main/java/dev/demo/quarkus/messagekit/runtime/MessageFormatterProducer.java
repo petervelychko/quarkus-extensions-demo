@@ -1,7 +1,5 @@
 package dev.demo.quarkus.messagekit.runtime;
 
-import java.util.Map;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Singleton;
@@ -9,14 +7,12 @@ import jakarta.inject.Singleton;
 import dev.demo.messagekit.MessageCatalog;
 import dev.demo.messagekit.MessageFormatter;
 
+/**
+ * A regular CDI producer in the runtime module. The build step registers
+ * this class so consuming applications do not need to provide it themselves.
+ */
 @ApplicationScoped
 public class MessageFormatterProducer {
-
-    @Produces
-    @Singleton
-    public MessageCatalog catalog() {
-        return new MessageCatalog(Map.of("en", "Hello", "es", "Hola", "hr", "Pozdrav"));
-    }
 
     @Produces
     @Singleton

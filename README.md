@@ -1,8 +1,7 @@
 # quarkus-extensions-demo
 
-Stage demo-03: `@ConfigMapping` adds `quarkus.messagekit.language`,
-`quarkus.messagekit.prefix`, and `quarkus.messagekit.uppercase`.
-The optional prefix avoids empty-string configuration validation failures.
+Stage demo-04: `MessageKitRecorder` arranges runtime creation of a
+`MessageCatalog` synthetic CDI bean, while the build step still runs during
+Quarkus augmentation. See `@Record(RUNTIME_INIT)` in `MessageKitProcessor`.
 
 Build with JDK 25: `mvn clean install`.
-Edit `demo-app/src/main/resources/application.properties` to try `language=hr`.
