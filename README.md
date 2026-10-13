@@ -81,7 +81,7 @@ PORUKA POZDRAV QUARKUS
 
 ## Live demo checkpoints (real Git tags)
 
-The ZIP includes the `.git` directory and six annotated Git tags with distinct
+The ZIP includes the `.git` directory and seven annotated Git tags with distinct
 commits. Extract the entire archive (including hidden files) to preserve them.
 The `main` branch points to the final working project; `demo-final` tags it.
 
@@ -102,43 +102,49 @@ git tag -n
 git log --oneline --decorate --graph --all
 ```
 
-Switch to a checkpoint from the repository root, and rebuild before running:
+## Switching between demo stages
+
+Use the executable `scripts/checkpoint.sh` from any directory inside the
+repository (the script moves to the repository root automatically):
 
 ```bash
-git switch --detach demo-02
+./scripts/checkpoint.sh 00  # Plain library and manual CDI wiring
+./scripts/checkpoint.sh 01  # Extension skeleton
+./scripts/checkpoint.sh 02  # CDI integration with a build step
+./scripts/checkpoint.sh 03  # Configuration mapping
+./scripts/checkpoint.sh 04  # Runtime recorder and synthetic bean
+./scripts/checkpoint.sh 05  # Extension tests
+./scripts/checkpoint.sh 06  # Final project
+```
+
+**Warning:** The script runs `git switch --detach --discard-changes`, which
+permanently discards uncommitted changes to tracked files. Commit or stash
+anything you want to keep. Untracked files are not automatically deleted.
+
+The script is committed in **every checkpoint**, including `demo-00`, so it
+remains available after switching between tags. It leaves Git in detached
+HEAD state, which is appropriate for a read-only stage demonstration.
+
+To show what changes between stages:
+
+```bash
+git diff demo-02 demo-03
+```
+
+Rebuild after switching stages because the Maven module graph and extension
+artifacts can differ. Stop a running Quarkus dev-mode process before switching:
+
+```bash
 mvn clean install
 cd demo-app
 mvn quarkus:dev
 ```
 
-For the next stage, stop dev mode, return to the repository root, and run:
-
-```bash
-git switch --detach demo-03
-mvn clean install
-```
-
-To return to the complete project:
+To return to the `main` branch instead of detached `demo-final`, use:
 
 ```bash
 git switch main
-mvn clean install
 ```
-
-Git checks out a detached HEAD when you select a tag. For live coding, make a
-separate throwaway branch at the chosen checkpoint so you can commit or discard
-changes without rewriting the prepared tags:
-
-```bash
-git switch -c live-demo demo-02
-# Make your live changes here.
-# Before restarting from demo-02, delete the throwaway branch if desired.
-```
-
-For a clean restore to a tagged state, stash or commit local edits first,
-and avoid reusing a running dev-mode process after switching tags.
-Because checkpoints change the Maven reactor and extension artifacts, run
-`mvn clean install` at each stage to avoid stale local artifacts.
 
 ## How the extension works
 
