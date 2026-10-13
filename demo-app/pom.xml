@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>dev.demo</groupId>
-            <artifactId>messagekit-core</artifactId>
+            <artifactId>quarkus-messagekit</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

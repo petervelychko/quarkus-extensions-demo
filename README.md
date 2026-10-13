@@ -1,8 +1,8 @@
 # quarkus-extensions-demo
 
-Stage demo-01: the extension skeleton now exists, with separate runtime and
-deployment artifacts. The application still uses its manual CDI producer.
+Stage demo-02: `AdditionalBeanBuildItem` registers the runtime module's CDI
+producer. The consuming application now depends on the extension and no longer
+contains its own producer class.
 
-Build with Java 25 and Maven: `mvn clean install`.
-Inspect `quarkus-messagekit/runtime/pom.xml`, `quarkus-messagekit/deployment/pom.xml`,
-and `MessageKitProcessor.java`.
+Build with JDK 25: `mvn clean install`.
+Inspect `MessageKitProcessor` and `MessageFormatterProducer`.

@@ -1,4 +1,4 @@
-package dev.demo.app;
+package dev.demo.quarkus.messagekit.runtime;
 
 import java.util.Map;
 
@@ -9,15 +9,19 @@ import jakarta.inject.Singleton;
 import dev.demo.messagekit.MessageCatalog;
 import dev.demo.messagekit.MessageFormatter;
 
-/** Manual CDI wiring inside one application, before we have an extension. */
+/** Provides reusable CDI integration for any application using the extension. */
 @ApplicationScoped
 public class MessageFormatterProducer {
 
     @Produces
     @Singleton
-    MessageFormatter formatter() {
-        MessageCatalog catalog = new MessageCatalog(Map.of(
-                "en", "Hello", "es", "Hola", "hr", "Pozdrav"));
+    public MessageCatalog catalog() {
+        return new MessageCatalog(Map.of("en", "Hello", "es", "Hola", "hr", "Pozdrav"));
+    }
+
+    @Produces
+    @Singleton
+    public MessageFormatter formatter(MessageCatalog catalog) {
         return new MessageFormatter(catalog, "en", "", false);
     }
 }
