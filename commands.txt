@@ -1,0 +1,13 @@
+// to create the demo extension
+mvn io.quarkus.platform:quarkus-maven-plugin:3.40.1:create-extension -N \
+    -DgroupId=dev.demo \
+    -DextensionId=quarkus-messagekit \
+    -DwithoutTests
+
+
+// using Vineflower decompiler to see the recorded code
+mvn package -Dquarkus.package.jar.decompiler.enabled=true
+
+find target/decompiler -type f -name '*createMessageCatalog*'
+
+grep -R -n 'createCatalog' target/decompiler/
