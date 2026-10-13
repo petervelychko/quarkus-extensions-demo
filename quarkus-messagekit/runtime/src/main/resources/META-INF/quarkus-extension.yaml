@@ -1,0 +1,7 @@
+name: "MessageKit"
+description: "Simple configurable Java message formatter"
+metadata:
+  short-name: "messagekit"
+  keywords:
+    - "message"
+    - "greeting"

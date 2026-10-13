@@ -11,6 +11,7 @@
 
     <modules>
         <module>messagekit-core</module>
+        <module>quarkus-messagekit</module>
         <module>demo-app</module>
     </modules>
 
