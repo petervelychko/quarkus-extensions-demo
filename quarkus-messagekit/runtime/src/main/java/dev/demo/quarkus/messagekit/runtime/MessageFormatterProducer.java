@@ -9,7 +9,6 @@ import jakarta.inject.Singleton;
 import dev.demo.messagekit.MessageCatalog;
 import dev.demo.messagekit.MessageFormatter;
 
-/** Provides reusable CDI integration for any application using the extension. */
 @ApplicationScoped
 public class MessageFormatterProducer {
 
@@ -21,7 +20,7 @@ public class MessageFormatterProducer {
 
     @Produces
     @Singleton
-    public MessageFormatter formatter(MessageCatalog catalog) {
-        return new MessageFormatter(catalog, "en", "", false);
+    public MessageFormatter formatter(MessageCatalog catalog, MessageKitConfig config) {
+        return new MessageFormatter(catalog, config.language(), config.prefix().orElse(""), config.uppercase());
     }
 }
